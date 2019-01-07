@@ -6,6 +6,7 @@ using namespace std;
 
 template<class Problem, class Solution>
 class Solver {
+public:
     virtual Solution solve(Problem problemToSolve) = 0;
 
 };
