@@ -6,18 +6,12 @@
 #include "FileCacheManager.h"
 #include "CacheManager.h"
 
-template <class Problem, class Solution>
 class ClientHandler {
-
- private:
-
-  Solver<Problem, Solution> currentSolver;
-  CacheManager<Problem, Solution> currentManager;
 
 
  public:
-  void handleClient(istream input, ostream output) = 0;
 
+  virtual void handleClient(istream input, ostream output) = 0;
 
 };
 

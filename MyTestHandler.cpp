@@ -3,3 +3,6 @@
 //
 
 #include "MyTestHandler.h"
+void MyTestHandler::handleClient(istream input, ostream output) {
+
+}
