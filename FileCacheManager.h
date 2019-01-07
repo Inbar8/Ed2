@@ -3,7 +3,7 @@
 #include "CacheManager.h"
 
 
-class FileCacheManager : CasheManager {
+class FileCacheManager : CacheManager {
 
 
 
