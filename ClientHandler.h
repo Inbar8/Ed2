@@ -5,7 +5,6 @@
 #include "Solver.h"
 #include "FileCacheManager.h"
 #include "CacheManager.h"
-#include <ios>
 
 template <class Problem, class Solution>
 class ClientHandler {
