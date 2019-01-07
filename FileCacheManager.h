@@ -2,10 +2,8 @@
 #define ED2_FILECACHEMANAGER_H
 #include "CacheManager.h"
 
-
-class FileCacheManager : CacheManager {
-
-
+template <class Problem, class Solution>
+class FileCacheManager : public CacheManager<Problem, Solution> {
 
 
 };
