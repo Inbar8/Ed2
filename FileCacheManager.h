@@ -60,6 +60,18 @@ public:
         return cacheMap[problemToReturn];
     }
 
+ public:
+  void save(Solution saveSolution) override {
+
+  }
+  bool check(Problem checkSolutionExist) override {
+    return false;
+  }
+  Solution get(Problem problemToReturn) override {
+    return nullptr;
+  }
+  FileCacheManager() = default;
+
 };
 
 #endif //ED2_FILECACHEMANAGER_H

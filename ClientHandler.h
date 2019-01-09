@@ -6,6 +6,7 @@
 #include "FileCacheManager.h"
 #include "CacheManager.h"
 
+template <class Problem, class Solution>
 class ClientHandler {
 
 
