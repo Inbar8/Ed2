@@ -9,6 +9,8 @@ class CacheManager {
 
 public:
 
+    virtual void getTheCacheReady(string&) = 0;
+
     virtual void save(Problem saveProblem, Solution saveSolution) = 0;
 
     virtual bool check(Problem checkSolutionExist) = 0;

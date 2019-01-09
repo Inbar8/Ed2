@@ -6,4 +6,4 @@ set(CMAKE_CXX_STANDARD 14)
 add_executable(Ed2 main.cpp Server.h MySerialServer.h
         Solver.h MyParallelServer.h
         CacheManager.h FileCacheManager.cpp
-        FileCacheManager.h MyTestHandler.cpp MyTestHandler.h ClientHandler.h StringReverser.h StringReverser.cpp)
+        FileCacheManager.h  MyClientHandler.h ClientHandler.h StringReverser.h StringReverser.cpp Searchable.h Searcher.h BestFirstSearch.h)

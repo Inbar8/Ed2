@@ -4,7 +4,7 @@
 #include "ClientHandler.h"
 
 template <class Problem, class Solution>
-class MyClientHandler : public ClientHandler<Problem, Solution>{
+class MyClientHandler : public ClientHandler {
 
 
 
@@ -13,16 +13,25 @@ class MyClientHandler : public ClientHandler<Problem, Solution>{
 
  public:
 
-
   MyClientHandler(Solver<Problem, Solution>* setTypeSolve,
       CacheManager<Problem, Solution>* setTypeCache) :
-      currentManager(setTypeCache), currentSolver(setTypeSolve) {}
+      currentManager(setTypeCache), currentSolver(setTypeSolve) {
+
+    //this->currentManager.g
+
+
+  }
+
+
 
 
   void handleClient(istream input, ostream output) override {
 
 
+  }
 
+  string solverType() {
+    return typeid(this->currentSolver).name();
   }
 };
 

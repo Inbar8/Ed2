@@ -5,73 +5,60 @@
 #include <string>
 #include <fstream>
 #include <unordered_map>
-
+#define SUFFIX ".txt"
 using namespace std;
 
-////
-class FileCacheManager : public CacheManager<string, string> {
-    string fileName;
-    unordered_map<string, string> cacheMap;
+template <class Problem, class Solution>
+class FileCacheManager : public CacheManager<Problem, Solution> {
+    unordered_map<Problem, Solution> cacheMap; //TODO: how to create this hashmap in o(1).
+    fstream cacheFile;
+
+
+
+  Solution readFromFile(Problem& problemToRead) {
+
+    while (!this->cacheFile.eof()) {
+   //   if (strcmp())
+    }
+    throw invalid_argument("No such problem in file");
+  }
 
 public:
-    FileCacheManager(const string &fileName,
-                     const unordered_map<string, string> &cacheMap) : fileName(
-            fileName), cacheMap(cacheMap) {}
 
-public:
-    void writeToFile(string &fileName) {
-        fstream stream(fileName);
-        if (!stream.is_open()) {
-            throw ("Can't open file");
-        }
-        for (auto p : cacheMap) {
-            //one line -> problem.
-            stream << p.first << endl;
-            //next line -> solution. (no $).
-            stream << p.second << endl;
-        }
-        stream.close();
+    void getTheCacheReady(string& typeOfFile) override {
+      typeOfFile.append(SUFFIX);
+      cacheFile.open(typeOfFile, ios::in | ios::app);
+      if (!this->cacheFile.is_open()) {
+        throw runtime_error ("Can't open file");
+      }
+      ////////////
+      ///////////
+      ////////////
+      ///////////////// how to get data from map.
+
     }
 
-
-    void readFromFile(string &fileName) {
-        fstream stream(fileName);
-        string problemStr;
-        string solutionStr;
-        while (!stream.eof()) {
-            //problem.
-            getline(stream, problemStr);
-            getline(stream, solutionStr);
-            cacheMap[problemStr] = solutionStr;
-        }
-        stream.close();
-    }
-
-    void save(string saveProblem,string saveSolution) override {
-        cacheMap[saveProblem] = saveSolution;
-    }
-
-    bool check(string checkProblemExist) override {
-        return (bool)(cacheMap.count(checkProblemExist));
-    }
-
-
-    string getSolution(string problemToReturn) override {
-        return cacheMap[problemToReturn];
-    }
 
  public:
-  void save(Solution saveSolution) override {
+  void save(Problem problemToWrite, Solution solutionToWrite) override {
+    this->cacheFile<<problemToWrite<<endl<<solutionToWrite;
+    this->cacheMap[problemToWrite] = solutionToWrite;
+  }
 
+  bool check(Problem checkProblemExist) override {
+    return (bool)(cacheMap.count(checkProblemExist));
   }
-  bool check(Problem checkSolutionExist) override {
-    return false;
-  }
-  Solution get(Problem problemToReturn) override {
-    return nullptr;
-  }
-  FileCacheManager() = default;
 
+
+  Solution getSolution(Problem problemToReturn) override {
+    return cacheMap[problemToReturn];
+  }
+
+  ~FileCacheManager() {
+      if (this->casheFile.is_open()) {
+        this->casheFile.close();
+      }
+    }
 };
 
 #endif //ED2_FILECACHEMANAGER_H
