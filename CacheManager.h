@@ -3,15 +3,17 @@
 #define ED2_CACHEMANAGER_H
 
 
-template <class Problem, class Solution>
+template<class Problem, class Solution>
 class CacheManager {
 
 
- public:
+public:
 
-  virtual void save(Solution saveSolution) = 0;
-  virtual bool check(Problem checkSolutionExist) = 0;
-  virtual Solution get(Problem problemToReturn) = 0;
+    virtual void save(Problem saveProblem, Solution saveSolution) = 0;
+
+    virtual bool check(Problem checkSolutionExist) = 0;
+
+    virtual Solution getSolution(Problem problemToReturn) = 0;
 
 
 };
