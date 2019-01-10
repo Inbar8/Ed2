@@ -3,11 +3,11 @@
 #define ED2_BESTFIRSTSEARCH_H
 
 #include <set>
-#include "Searcher.h"
+#include "SearchAlgorithm.h"
 #include "unordered_set"
 
 template <class Problem, class Solution>
-class BestFirstSearch : public Searcher<Problem, Solution> {
+class BestFirstSearch : public SearchAlgorithm<Problem, Solution> {
 
 
  public:

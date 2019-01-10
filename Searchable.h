@@ -2,6 +2,9 @@
 #define ED2_SEARCHABLE_H
 #include "State.h"
 #include <queue>
+
+using namespace std;
+
 template <class T>
 class Searchable {
 
