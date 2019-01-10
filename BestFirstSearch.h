@@ -16,19 +16,32 @@ class BestFirstSearch : public Searcher<Problem, Solution> {
 
     multiset<State<Problem>> openList = problemToSolve.getStartState();
 
-    unordered_multiset<State<Problem>> closeList =
+    unordered_multiset<State<Problem>> closedList =
         new unordered_multiset<State<Problem>>();
 
     while (openList.size() > 0) {
-  //    State<Problem> node = openList.top();
-   //   openList.erase()
+      State<Problem> node = openList.begin();
+      openList.begin().erase();
+      if(node == problemToSolve.getEndState()){
+          return getTrace();
+      }
+      multiset<State<Problem>> successors = problemToSolve.getFullState();
+      for(auto s: successors){
+          if(!(bool)(closedList.count(s)) && !(bool) (openList.count(s))){
+              openList.insert(s);
+          } else{
 
+          }
+      }
     }
 
 
 
   }
 
+  Solution getTrace(){
+      return nullptr;
+  }
 };
 
 
