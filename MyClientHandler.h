@@ -15,17 +15,15 @@ class MyClientHandler : public ClientHandler {
 
   MyClientHandler(Solver<Problem, Solution>* setTypeSolve,
       CacheManager<Problem, Solution>* setTypeCache) :
-      currentManager(setTypeCache), currentSolver(setTypeSolve) {
-
-    //this->currentManager.g
-
-
-  }
+      currentManager(setTypeCache), currentSolver(setTypeSolve) {}
 
 
 
 
-  void handleClient(istream input, ostream output) override {
+  void handleClient(StreamInput* input, StreamOutput* output) override {
+
+
+
 
 
   }

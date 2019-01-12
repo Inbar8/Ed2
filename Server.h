@@ -1,13 +1,32 @@
 #ifndef ED2_SERVER_H
 #define ED2_SERVER_H
+#include <pthread.h>
+#include "Socket.h"
 #include "ClientHandler.h"
+#include "StringReverser.h"
+#include "MyClientHandler.h"
 
-class Server {
+namespace server_side {
+
+class Server;
+
+namespace boot {
+
+class Main {
  public:
+  void main(char**);
 
-  virtual void open(int port, ClientHandler* handleType) = 0;
+};
+}
+}
 
-  virtual void stop() = 0;
+class server_side::Server {
+
+public:
+
+virtual void open(int port, ClientHandler* handleType) = 0;
+
+virtual void stop() = 0;
 };
 
 #endif //ED2_SERVER_H

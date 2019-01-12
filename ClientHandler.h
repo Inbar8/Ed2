@@ -9,7 +9,7 @@
 class ClientHandler {
 
  public:
-  virtual void handleClient(istream input, ostream output) = 0;
+  virtual void handleClient(StreamInput* input, StreamOutput* output) = 0;
 
 };
 
