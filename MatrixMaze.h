@@ -30,6 +30,9 @@ class MatrixMaze : public Searchable<T> {
   priority_queue<State<T>> getFullState() override {
     return priority_queue<T>();
   }
+  vector<vector<T>>* getMatrix() {
+    return this->matrixBase;
+  }
 
 };
 #endif //ED2_MATRIXMAZE_H
