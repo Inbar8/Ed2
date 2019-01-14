@@ -1,6 +1,7 @@
 #include "Socket.h"
 #define ERROR -1
 #define BUFFER_SIZE 1024
+#define TIME_WAIT 15
 posix_sockets::TCP_socket::TCP_socket() {
   sock_fd = socket(AF_INET, SOCK_STREAM, 0);
   if (sock_fd < 0) {
@@ -66,7 +67,7 @@ posix_sockets::TCP_client posix_sockets::TCP_server::accept() {
   }
 
   TCP_client client_socket = TCP_client(TCP_socket(client_sock_fd));
-
+  client_socket.setTimeout(TIME_WAIT);
   return client_socket;
 }
 

@@ -14,8 +14,6 @@
 namespace posix_sockets {
 using namespace std;
 
-// the socket is not automatically closed in the destructor so that the object
-// can be passed as a parameter (possibly to another thread)
 struct TCP_socket {
   int sock_fd;
   TCP_socket();

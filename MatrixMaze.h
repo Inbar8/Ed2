@@ -3,29 +3,22 @@
 
 #include "Searchable.h"
 #include <vector>
+#include <list>
 #include <fstream>
+
+/**
+ * Basic data structure to represent searchable matrix.
+ * @tparam T - type of data stored.
+ */
 template <class T>
 class MatrixMaze : public Searchable<T> {
 
-  vector<vector<T>> matrixBase;
-
-  vector<vector<string>> getMatrixAsString() {
-    vector<vector<string>> vectorToReturn;
-
-    for (vector<T> addLine : this->matrixBase) {
-      vector<string> vectorLine;
-      for (T addVariable : addLine) {
-     //   vectorLine.push_back((T));
-      }
-
-
-    }
-  }
+  vector<vector<T>>* matrixBase;
 
  public:
 
-  MatrixMaze () {
-
+  explicit MatrixMaze (vector<vector<T>>* setMatrix) {
+    this->matrixBase = setMatrix;
   }
 
   State<T> getStartState() override {
@@ -34,15 +27,8 @@ class MatrixMaze : public Searchable<T> {
   State<T> getEndState() override {
     return State<T>(T());
   }
-  priority_queue<T> getFullState() override {
+  priority_queue<State<T>> getFullState() override {
     return priority_queue<T>();
-  }
-
-  friend ofstream &operator<<(ofstream & outPutStream, MatrixMaze & outputIt) {
-
-
-
-
   }
 
 };

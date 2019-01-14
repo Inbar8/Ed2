@@ -1,14 +1,19 @@
 #include "MySerialServer.h"
+#include "checkcheck.h"
+#include "ProtocolTrace.h"
 #include <istream>
+
+
 void server_side::boot::Main::main(char** args) {
 
   try {
 
     Server* server = new MySerialServer();
-    server->open(stoi(args[0]), new MyClientHandler<string, string>(
-        new StringReverser,
-        new FileCacheManager<string, string>));
-
+    server->open(stoi(args[0]),
+        new MyClientHandler<MatrixMaze<int>, vector<string>>(
+        new checkcheck,
+        new FileCacheManager<MatrixMaze<int>, vector<string>>,
+        new ProtocolMatrix,  new ProtocolTrace));
 
   } catch (...) {
     cout<<"Failed to create server"<<endl;
@@ -23,11 +28,18 @@ void MySerialServer::open(int port, ClientHandler* clientType) {
   auto * serialServer = new posix_sockets::TCP_server(port);
 
   serialServer->listen(INT16_MAX);
-  serialServer->setTimeout(1);
-  posix_sockets::TCP_client client = serialServer->accept();
-  clientType->handleClient(&client, &client);
+  serialServer->setTimeout(15);
 
-}
+  //while(true) {
+
+
+    posix_sockets::TCP_client client = serialServer->accept();
+    clientType->handleClient(&client, &client);
+  }
+
+
+
+
 void MySerialServer::stop() {
 
 }
@@ -54,13 +66,7 @@ MySerialServer::MySerialServer() = default;
 //    // Clean.
 //    pthread_mutex_destroy(&mu);
 //    pthread_cond_destroy(&flightGearConnected);
-//
-//
 //  }
-//
-
-
-//
 //
 //  time_t startTimeSec = time(NULL);
 //
