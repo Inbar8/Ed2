@@ -1,10 +1,10 @@
 #ifndef ED2_SERVER_H
 #define ED2_SERVER_H
 #include <pthread.h>
-#include "Socket.h"
-#include "ClientHandler.h"
-#include "StringReverser.h"
-#include "MyClientHandler.h"
+#include "../server_utility/Socket.h"
+#include "../ClientHandler.h"
+#include "../StringReverser.h"
+#include "../MyClientHandler.h"
 
 namespace server_side {
 

@@ -7,7 +7,7 @@
 #include <string>
 #include <system_error>
 #include <stdexcept>
-#include "MyException.h"
+#include "../MyException.h"
 #include "StreamInput.h"
 #include "StreamOutput.h"
 

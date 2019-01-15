@@ -1,8 +1,12 @@
 
 #ifndef ED2_STATE_H
 #define ED2_STATE_H
-
+#include <unordered_map>
 using namespace std;
+
+
+
+
 
 template<class T>
 class State {
@@ -44,6 +48,12 @@ class State {
       return this->cost < equalCheck.cost;
   }
 
+  bool operator()(const State<T> *comp1, const State<T> *comp2) const {
+    return comp1->cost < comp2->cost;
+  }
 };
+
+
+
 
 #endif //ED2_STATE_H

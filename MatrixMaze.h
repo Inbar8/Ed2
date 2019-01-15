@@ -5,14 +5,17 @@
 #include <vector>
 #include <list>
 #include <fstream>
+#include <unordered_map>
+#include <algorithm>
 #define POINT_ARGS 2
 #define WALL -1
+
 struct Point {
   int x, y;
 
   explicit Point(int setX, int setY) {
-  this->x = setX;
-  this->y = setY;
+    this->x = setX;
+    this->y = setY;
   }
   int getX() const {
     return this->x;
@@ -21,6 +24,10 @@ struct Point {
     return this->y;
   }
 };
+
+
+
+
 /**
  * Basic data structure to represent searchable matrix.
  * @tparam T - type of data stored.
@@ -48,47 +55,64 @@ class MatrixMaze : public Searchable<T> {
 
   priority_queue<State<T>> getFullState(const State<T>& findAdj) override {
 
-    unsigned int lineX = findAdj.getState().getX();
-    unsigned int  rowY = findAdj.getState().getY();
+    try {
+      const unsigned int x = findAdj.getState().getX();
+      const unsigned int y = findAdj.getState().getY();
 
-//    auto compare = [](State<T> lhs, State<T> rhs) {
-//      return lhs.getCost() < rhs.getCost();
-//    };
+      priority_queue<State<T>> returnList;
+      if (x > 0 & (this->matrixBase->at(y).at(x - 1) != WALL)) {
+        State<Point> left(Point(x - 1, y));
+        left.setCost(this->matrixBase->at(y).at(x - 1));
+        returnList.emplace(left);
+      }
+      if (x < this->matrixBase[0].size()
+          & (this->matrixBase->at(y).at(x + 1) != WALL)) {
+        State<Point> right(Point(x + 1, y));
+        right.setCost(this->matrixBase->at(y).at(x + 1));
+        returnList.emplace(right);
+      }
 
-   // priority_queue<State<T>, vector<int>, decltype(compare)> returnList(compare);
-    priority_queue<State<T>> returnList;
-    if (lineX == 0 & this->matrixBase->at(lineX--).at(rowY) != WALL) {
-      State<Point> left(Point(lineX--, rowY));
-      left.setCost(this->matrixBase->at(lineX--).at(rowY));
-      returnList.emplace(left);
+      if (y > 0 & (this->matrixBase->at(y - 1).at(x) != WALL)) {
+
+        State<Point> up(Point(x, y - 1));
+        up.setCost(this->matrixBase->at(y - 1).at(x));
+        returnList.emplace(up);
+      }
+
+      if (y < this->matrixBase->size()
+          & (this->matrixBase->at(y + 1).at(x) != WALL)) {
+
+        State<Point> down(Point(x, y + 1));
+        down.setCost(this->matrixBase->at(y + 1).at(x));
+        returnList.emplace(down);
+      }
+
+      return returnList;
+
+    } catch(...) {
+      throw invalid_argument("Problem in returning adj");
     }
-    if (lineX == this->matrixBase[0].size()
-        & this->matrixBase->at(lineX++).at(rowY) != WALL) {
-      State<Point> right(Point(lineX++, rowY));
-      right.setCost(this->matrixBase->at(lineX++).at(rowY));
-      returnList.emplace(right);
-    }
-
-    if (rowY == 0 & this->matrixBase->at(lineX).at(rowY--) != WALL) {
-
-      State<Point> down(Point(lineX, rowY--));
-      down.setCost(this->matrixBase->at(lineX).at(rowY--));
-      returnList.emplace(down);
-    }
-
-    if (rowY == this->matrixBase->size()
-        & this->matrixBase->at(lineX).at(rowY++)!= WALL) {
-
-      State<Point> up(Point(lineX, rowY++));
-      up.setCost(this->matrixBase->at(lineX).at(rowY++));
-      returnList.emplace(up);
-    }
-
-    return returnList;
   }
   vector<vector<int>>* getMatrix() {
     return this->matrixBase;
   }
 
 };
+
+//
+//
+//struct matrixHash {
+//  int operator()(const MatrixMaze<Point> &val) const {
+//    return hash< MatrixMaze<Point>::value_type>()(val.getMatrix());
+//  }
+//};
+//
+//template<typename MatrixMaze>
+//struct matrixEquality {
+//  bool operator()(const MatrixMaze &left, const MatrixMaze& right) const {
+//    return left == right;
+//  }
+//};
+
+
 #endif //ED2_MATRIXMAZE_H

@@ -12,8 +12,12 @@ class checkcheck : public Solver<MatrixMaze<Point>, vector<string>>{
  public:
   vector<string> solve(MatrixMaze<Point> problemToSolve) override{
 
-    vector<string> vectorlol;
-    return vectorlol;
+
+
+    problemToSolve.getFullState(problemToSolve.getStartState());
+
+
+    return vector<string>();
   }
 
 };

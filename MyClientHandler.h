@@ -2,10 +2,9 @@
 #ifndef ED2_MYTESTHANDLER_H
 #define ED2_MYTESTHANDLER_H
 #include "ClientHandler.h"
-#include "ProtocolMatrix.h"
+#include "protocols/ProtocolMatrix.h"
 #define NAME_FILE "solution.txt"
-#define SUFFIX_TYPE "end\n"
-#define SUFFIX_SIZE 4
+#define SUFFIX_TYPE "end"
 template <class Problem, class Solution>
 class MyClientHandler : public ClientHandler {
 
@@ -39,18 +38,20 @@ try {
     do {
       inputString += input->read();
 
-      unsigned long suffixExist = inputString.find(SUFFIX_TYPE);
-      if (suffixExist) {
-        inputString.erase(suffixExist, inputString.size());
-      }
-    } while (inputString.compare(inputString.size() - SUFFIX_SIZE,
-        SUFFIX_SIZE, SUFFIX_TYPE) != 0);
+    } while (inputString.rfind(SUFFIX_TYPE) == string::npos);
+
+    inputString.erase(inputString.begin() + inputString.rfind(SUFFIX_TYPE), inputString.end());
 
 
+  //output->write(problemP->writeProtocol(problemP->readProtocol(inputString)));
     output->write(solutionP->writeProtocol(
         currentSolver->solve(problemP->readProtocol(inputString))));
   }
+catch (invalid_argument& e) {
+  cout<<e.what()<<endl;
+}
 catch (...){
+  cout<<"Problem in client handler"<<endl;
   return;
 }
   }

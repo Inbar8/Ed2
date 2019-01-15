@@ -1,6 +1,6 @@
 #include "MySerialServer.h"
-#include "checkcheck.h"
-#include "ProtocolTrace.h"
+#include "../checkcheck.h"
+#include "../protocols/ProtocolTrace.h"
 #include <istream>
 
 

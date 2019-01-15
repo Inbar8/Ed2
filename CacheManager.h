@@ -13,7 +13,7 @@ public:
 
   virtual void createCache(const char* cacheName) = 0;
 
-  virtual void save(Problem saveProblem, Solution saveSolution) = 0;
+  virtual void save(string saveProblem, string saveSolution) = 0;
 
   virtual bool check(Problem checkSolutionExist) = 0;
 

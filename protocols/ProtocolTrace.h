@@ -12,7 +12,17 @@ class ProtocolTrace : public Protocol<vector<string>> {
     return vector<string>();
   }
   string writeProtocol(vector<string> t) override {
-    return std::__cxx11::string();
+    string returnString;
+
+    returnString += "{";
+    for(const string &add : t) {
+
+      returnString += add;
+
+    }
+    returnString += "}";
+
+    return returnString;
   }
 //}Right, Left, Down, Up }
 };

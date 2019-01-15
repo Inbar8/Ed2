@@ -4,13 +4,13 @@
 
 #include <sstream>
 #include "Protocol.h"
-#include "MatrixMaze.h"
+#include "../MatrixMaze.h"
 
 class ProtocolMatrix : public Protocol<MatrixMaze<Point>> {
 
   Point singleVectorPoint(vector<int>& vectorPoint) {
     if (vectorPoint.size() != POINT_ARGS) {
-      throw invalid_argument("Bad matrix point set");
+      throw invalid_argument("Start or end points invalid");
     }
     return Point(vectorPoint.front(), vectorPoint.back());
   }
@@ -46,12 +46,17 @@ class ProtocolMatrix : public Protocol<MatrixMaze<Point>> {
       }
 
     }
-    Point start = this->singleVectorPoint(matrixBase->back());
-    matrixBase->pop_back();
 
     Point end = this->singleVectorPoint(matrixBase->back());
     matrixBase->pop_back();
 
+    Point start = this->singleVectorPoint(matrixBase->back());
+    matrixBase->pop_back();
+
+    if (start.x < 0 | start.x > matrixBase[0].size()
+    | start.y < 0 | start.y > matrixBase->size()) {
+      throw invalid_argument("Point start/end invalid");
+    }
 
     return MatrixMaze<Point>(matrixBase, start, end);
   }
@@ -69,10 +74,10 @@ class ProtocolMatrix : public Protocol<MatrixMaze<Point>> {
       returnVector += "\n";
 
     }
-//    Point startToString = writeThis.getStartState().getState();
-    //returnVector += this->pointToString(startToString);
-   // Point endToString = writeThis.getEndState().getState();
-//    returnVector += this->pointToString(endToString);
+    Point startToString = writeThis.getStartState().getState();
+    returnVector += this->pointToString(startToString);
+    Point endToString = writeThis.getEndState().getState();
+    returnVector += this->pointToString(endToString);
 
     return returnVector;
   }
