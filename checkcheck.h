@@ -7,10 +7,10 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-class checkcheck : public Solver<MatrixMaze<int>, vector<string>>{
+class checkcheck : public Solver<MatrixMaze<Point>, vector<string>>{
 
  public:
-  vector<string> solve(MatrixMaze<int> problemToSolve) override{
+  vector<string> solve(MatrixMaze<Point> problemToSolve) override{
 
     vector<string> vectorlol;
     return vectorlol;

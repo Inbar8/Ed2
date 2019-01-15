@@ -15,7 +15,7 @@ class Searchable {
 
   virtual State<T> getEndState() = 0;
 
-  virtual priority_queue<State<T>> getFullState() = 0;
+  virtual priority_queue<State<T>> getFullState(const State<T>&) = 0;
 };
 
 

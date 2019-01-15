@@ -1,4 +1,6 @@
 #include "Socket.h"
+#include <algorithm>
+
 #define ERROR -1
 #define BUFFER_SIZE 1024
 #define TIME_WAIT 15
@@ -95,12 +97,15 @@ posix_sockets::string posix_sockets::TCP_client::read() {
   char buffer[BUFFER_SIZE];
 
     if (::read(this->sock.sock_fd, buffer, BUFFER_SIZE) < 0)	{
-      if (errno == EAGAIN || errno == EWOULDBLOCK)	{
+      if (errno == EAGAIN || errno == EWOULDBLOCK)	{/////////////////////////////////////////////////////////////////////ENDING MASSAGE CHECK /001
         throw timeout_exception("timeout on read");
       }
       throw system_error(error_code(errno, generic_category()), "error on read");
     }
-  return posix_sockets::string(buffer);
+
+    string str = buffer;
+  str.erase(remove(str.begin(), str.end(), '\r'), str.end());
+  return str;
 }
 
 

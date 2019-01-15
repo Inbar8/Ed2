@@ -8,35 +8,32 @@ void server_side::boot::Main::main(char** args) {
 
   try {
 
-    Server* server = new MySerialServer();
+    Server *server = new MySerialServer();
     server->open(stoi(args[0]),
-        new MyClientHandler<MatrixMaze<int>, vector<string>>(
-        new checkcheck,
-        new FileCacheManager<MatrixMaze<int>, vector<string>>,
-        new ProtocolMatrix,  new ProtocolTrace));
+                 new MyClientHandler<MatrixMaze<Point>, vector<string>>(
+                     new checkcheck,
+                     new FileCacheManager<MatrixMaze<Point>, vector<string>>,
+                     new ProtocolMatrix, new ProtocolTrace));
 
   } catch (...) {
-    cout<<"Failed to create server"<<endl;
+    cout << "Failed to create server" << endl;
   }
-
-
 
 }
 
 void MySerialServer::open(int port, ClientHandler* clientType) {
 
-  auto * serialServer = new posix_sockets::TCP_server(port);
+  auto *serialServer = new posix_sockets::TCP_server(port);
 
   serialServer->listen(INT16_MAX);
-  serialServer->setTimeout(15);
+  serialServer->setTimeout(1500000);
 
-  //while(true) {
+  posix_sockets::TCP_client client = serialServer->accept();
+  clientType->handleClient(&client, &client);
 
-
-    posix_sockets::TCP_client client = serialServer->accept();
-    clientType->handleClient(&client, &client);
-  }
-
+  serialServer->close();
+  delete serialServer;
+}
 
 
 
