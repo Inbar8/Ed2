@@ -1,10 +1,10 @@
 
 #ifndef ED2_PROTOCOLMATRIX_H
 #define ED2_PROTOCOLMATRIX_H
-
 #include <sstream>
 #include "Protocol.h"
 #include "../MatrixMaze.h"
+#define SPACE ' '
 
 class ProtocolMatrix : public Protocol<MatrixMaze<Point>> {
 
@@ -29,6 +29,8 @@ class ProtocolMatrix : public Protocol<MatrixMaze<Point>> {
   MatrixMaze<Point> readProtocol(string readMatrix) override {
     auto* matrixBase = new vector<vector<int>>;
 
+    readMatrix.erase(std::remove(readMatrix.begin(), readMatrix.end(), SPACE),
+        readMatrix.end());
     stringstream streamMatrix(readMatrix);
 
     int row;
@@ -37,8 +39,10 @@ class ProtocolMatrix : public Protocol<MatrixMaze<Point>> {
 
       line.push_back(row);
 
-      if (streamMatrix.peek() == ',')
+      if (streamMatrix.peek() == ',' | streamMatrix.peek() == SPACE) {
         streamMatrix.ignore();
+      }
+
       if (streamMatrix.peek() == '\n') {
 
         matrixBase->push_back(line);

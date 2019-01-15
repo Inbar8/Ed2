@@ -14,10 +14,14 @@ class FileCacheManager : public CacheManager<Problem, Solution> {
   fstream cacheFile;
 
   void createCache(const char *cacheName) override {
+
+
+
+
+
+
   }
-    //while (fstream.re)
-  //  getline()
-//  }
+
  public:
 
   FileCacheManager() = default;
