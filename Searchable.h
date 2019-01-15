@@ -1,7 +1,7 @@
 #ifndef ED2_SEARCHABLE_H
 #define ED2_SEARCHABLE_H
 #include "State.h"
-#include <queue>
+#include <set>
 
 using namespace std;
 
@@ -11,11 +11,11 @@ class Searchable {
 
  public:
 
-  virtual State<T> getStartState() const = 0;
+  virtual State<T>* getStartState() const = 0;
 
-  virtual State<T> getEndState() const = 0;
+  virtual State<T>* getEndState() const = 0;
 
-  virtual priority_queue<State<T>> getFullState(const State<T>&) const = 0;
+  virtual multiset<State<T>*> getFullState(const State<T>&) const = 0;
 };
 
 

@@ -2,9 +2,8 @@
 #ifndef ED2_STATE_H
 #define ED2_STATE_H
 #include <unordered_map>
+#include <queue>
 using namespace std;
-
-
 
 
 
@@ -28,7 +27,7 @@ class State {
   double getCost() {
       return this->cost;
   }
-  const State<T> &getCameFrom() const {
+  State<T> &getCameFrom() const {
       return this->cameFrom;
   }
 
@@ -51,9 +50,10 @@ class State {
   bool operator()(const State<T> *comp1, const State<T> *comp2) const {
     return comp1->cost < comp2->cost;
   }
+  friend bool operator<(const State<T>& left, const State<T>& right) {
+    return left->cost < right->cost;
+  }
 };
-
-
 
 
 #endif //ED2_STATE_H

@@ -12,9 +12,9 @@ class checkcheck : public Solver<MatrixMaze<Point>, vector<string>>{
  public:
   vector<string> solve(MatrixMaze<Point> problemToSolve) override{
 
+    State<Point>* start = problemToSolve.getStartState();
 
-
-    problemToSolve.getFullState(problemToSolve.getStartState());
+    multiset<State<Point>*> lol = problemToSolve.getFullState(*start);
 
 
     return vector<string>();

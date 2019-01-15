@@ -61,7 +61,7 @@ class ProtocolMatrix : public Protocol<MatrixMaze<Point>> {
     return MatrixMaze<Point>(matrixBase, start, end);
   }
   string writeProtocol(MatrixMaze<Point> writeThis) override {
-    vector<vector<int>>* pointTo = writeThis.getMatrix();
+    vector<vector<int>> *pointTo = writeThis.getMatrix();
     string returnVector;
     for (const vector<int> &line : *pointTo) {
 
@@ -74,10 +74,17 @@ class ProtocolMatrix : public Protocol<MatrixMaze<Point>> {
       returnVector += "\n";
 
     }
-    Point startToString = writeThis.getStartState().getState();
+    State<Point> *states = writeThis.getStartState();
+
+    Point startToString = states->getState();
     returnVector += this->pointToString(startToString);
-    Point endToString = writeThis.getEndState().getState();
+    delete states;
+
+    states = writeThis.getEndState();
+
+    Point endToString = states->getState();
     returnVector += this->pointToString(endToString);
+    delete states;
 
     return returnVector;
   }
