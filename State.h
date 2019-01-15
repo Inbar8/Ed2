@@ -47,13 +47,13 @@ class State {
       return this->cost < equalCheck.cost;
   }
 
-  bool operator()(const State<T> *comp1, const State<T> *comp2) const {
-    return comp1->cost < comp2->cost;
-  }
-  friend bool operator<(const State<T>& left, const State<T>& right) {
-    return left->cost < right->cost;
-  }
 };
 
+template <class T>
+struct comp {
+  bool operator()(State<T> *comp1, State<T> *comp2) {
+    return comp1->getCost() < comp2->getCost();
+  }
+};
 
 #endif //ED2_STATE_H

@@ -14,7 +14,7 @@ class checkcheck : public Solver<MatrixMaze<Point>, vector<string>>{
 
     State<Point>* start = problemToSolve.getStartState();
 
-    multiset<State<Point>*> lol = problemToSolve.getFullState(*start);
+    multiset<State<Point>*, comp<Point>> lol = problemToSolve.getFullState(*start);
 
 
     return vector<string>();

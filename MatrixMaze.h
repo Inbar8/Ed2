@@ -55,13 +55,13 @@ class MatrixMaze : public Searchable<T> {
     return new State<T>(this->end);
   }
 
-  multiset<State<T>*> getFullState(const State<T>& findAdj) const override {
+  multiset<State<T>*, comp<T>> getFullState(const State<T>& findAdj) const override {
 
     try {
       const unsigned int x = findAdj.getState().getX();
       const unsigned int y = findAdj.getState().getY();
 
-      multiset<State<T>*> returnList;
+      multiset<State<T>*, comp<T>> returnList;
 
       if (x > 0 & (this->matrixBase->at(y).at(x - 1) != WALL)) {
         State<Point>* left = new State<Point>(Point(x - 1, y));
