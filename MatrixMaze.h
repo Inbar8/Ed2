@@ -23,6 +23,9 @@ struct Point {
   int getY() const {
     return this->y;
   }
+  friend bool operator==(const Point& rightP,const Point& leftP) {
+    return rightP.x == leftP.getX() & rightP.y == leftP.getY();
+  }
 };
 
 
@@ -45,15 +48,15 @@ class MatrixMaze : public Searchable<T> {
   explicit MatrixMaze (vector<vector<int>>* setMatrix, T setStart,
       T setEnd) : start(setStart), end(setEnd), matrixBase(setMatrix) {}
 
-  State<T> getStartState() override {
+  State<T> getStartState() const override  {
     return State<T>(this->start);
   }
-  State<T> getEndState() override {
+  State<T> getEndState() const override  {
     return State<T>(this->end);
   }
 
 
-  priority_queue<State<T>> getFullState(const State<T>& findAdj) override {
+  priority_queue<State<T>> getFullState(const State<T>& findAdj) const override {
 
     try {
       const unsigned int x = findAdj.getState().getX();
@@ -93,26 +96,45 @@ class MatrixMaze : public Searchable<T> {
       throw invalid_argument("Problem in returning adj");
     }
   }
-  vector<vector<int>>* getMatrix() {
+  vector<vector<int>>* getMatrix() const {
     return this->matrixBase;
   }
 
+  friend bool operator==(const MatrixMaze<Point>& left, const MatrixMaze<Point>& right) {
+    return ((left.getStartState() == right.getStartState()) &
+        (left.getEndState() == right.getEndState()) &
+        (left.getMatrix() == right.getMatrix()));
+  }
+
+
 };
+namespace std {
+template<>
+struct hash<MatrixMaze<Point>> {
+  typedef std::size_t result_hash;
 
-//
-//
-//struct matrixHash {
-//  int operator()(const MatrixMaze<Point> &val) const {
-//    return hash< MatrixMaze<Point>::value_type>()(val.getMatrix());
-//  }
-//};
-//
-//template<typename MatrixMaze>
-//struct matrixEquality {
-//  bool operator()(const MatrixMaze &left, const MatrixMaze& right) const {
-//    return left == right;
-//  }
-//};
+  result_hash operator()(MatrixMaze<Point> const &s) const noexcept {
 
+    result_hash h1 = std::hash<int>{}(
+        (s.getStartState().getState().getX() << 1) ^
+            s.getStartState().getState().getY());
+
+    result_hash h2 = std::hash<int>{}(
+        (s.getEndState().getState().getX() << 1) ^
+            s.getEndState().getState().getY());
+
+    string hashIt;
+    for (const vector<int> &vector : *(s.getMatrix())) {
+      for (int ij : vector) {
+        hashIt += std::to_string(ij);
+      }
+    }
+    result_hash h3 = std::hash<std::string>{}(hashIt);
+    return h1 ^ h3 ^ (h2 << 1);
+  }
+
+
+};
+}
 
 #endif //ED2_MATRIXMAZE_H

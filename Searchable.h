@@ -11,11 +11,11 @@ class Searchable {
 
  public:
 
-  virtual State<T> getStartState() = 0;
+  virtual State<T> getStartState() const = 0;
 
-  virtual State<T> getEndState() = 0;
+  virtual State<T> getEndState() const = 0;
 
-  virtual priority_queue<State<T>> getFullState(const State<T>&) = 0;
+  virtual priority_queue<State<T>> getFullState(const State<T>&) const = 0;
 };
 
 
