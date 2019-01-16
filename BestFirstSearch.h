@@ -13,7 +13,9 @@ class BestFirstSearch : public SearchAlgorithm<T, Solution> {
 
 
 public:
-
+/**
+ * best first search.
+ */
     Solution search(Searchable<T> *problemToSolve) override {
 
         multiset<State<T> *, comp<T>> openList;
