@@ -1,45 +1,49 @@
 #include "MySerialServer.h"
-#include "../checkcheck.h"
+//#include "../checkcheck.h"
 #include "../protocols/ProtocolTrace.h"
 #include <istream>
+#include "../BestFirstSearch.h"
+#include "../SolverAlgorithms.h"
+#include <vector>
+#include <string>
 
+void server_side::boot::Main::main(char **args) {
 
-void server_side::boot::Main::main(char** args) {
+    try {
 
-  try {
+        Server *server = new MySerialServer();
+        server->open(stoi(args[0]),
+                     new MyClientHandler<MatrixMaze<Point>, vector<string>>(
+                             new SolverAlgorithms<MatrixMaze<Point>, vector<string>>(
+                                     new BestFirstSearch<MatrixMaze<Point>, vector<string>>),
+                             new FileCacheManager<MatrixMaze<Point>, vector<string>>,
+                             new ProtocolMatrix, new ProtocolTrace));
 
-    Server *server = new MySerialServer();
-    server->open(stoi(args[0]),
-                 new MyClientHandler<MatrixMaze<Point>, vector<string>>(
-                     new checkcheck,
-                     new FileCacheManager<MatrixMaze<Point>, vector<string>>,
-                     new ProtocolMatrix, new ProtocolTrace));
-
-  } catch (...) {
-    cout << "Failed to create server" << endl;
-  }
+    } catch (...) {
+        cout << "Failed to create server" << endl;
+    }
 
 }
 
-void MySerialServer::open(int port, ClientHandler* clientType) {
+void MySerialServer::open(int port, ClientHandler *clientType) {
 
-  auto *serialServer = new posix_sockets::TCP_server(port);
+    auto *serialServer = new posix_sockets::TCP_server(port);
 
-  serialServer->listen(INT16_MAX);
-  serialServer->setTimeout(1500000);
+    serialServer->listen(INT16_MAX);
+    serialServer->setTimeout(1500000);
 
-  posix_sockets::TCP_client client = serialServer->accept();
-  clientType->handleClient(&client, &client);
+    posix_sockets::TCP_client client = serialServer->accept();
+    clientType->handleClient(&client, &client);
 
-  serialServer->close();
-  delete serialServer;
+    serialServer->close();
+    delete serialServer;
 }
-
 
 
 void MySerialServer::stop() {
 
 }
+
 MySerialServer::MySerialServer() = default;
 
 // public:

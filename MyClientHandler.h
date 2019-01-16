@@ -5,6 +5,8 @@
 #include "protocols/ProtocolMatrix.h"
 #define NAME_FILE "solution.txt"
 #define SUFFIX_TYPE "end"
+
+#include "SearchAlgorithm.h"
 template <class Problem, class Solution>
 class MyClientHandler : public ClientHandler {
 

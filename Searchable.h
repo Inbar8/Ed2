@@ -15,7 +15,8 @@ class Searchable {
 
   virtual State<T>* getEndState() const = 0;
 
-  virtual multiset<State<T>*, comp<T>> getFullState(const State<T>&) const = 0;
+  virtual multiset<State<T>*, comp<T>> getFullState(const State<T>*)  = 0;
+  //virtual vector<State<T>*> getFullState(const State<T>&) const = 0;
 };
 
 

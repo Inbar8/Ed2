@@ -10,7 +10,6 @@
 #define POINT_ARGS 2
 #define WALL -1
 
-
 struct Point {
   int x, y;
 
@@ -18,7 +17,6 @@ struct Point {
     this->x = setX;
     this->y = setY;
   }
-
   int getX() const {
     return this->x;
   }
@@ -26,10 +24,12 @@ struct Point {
     return this->y;
   }
   friend bool operator==(const Point& rightP,const Point& leftP) {
-    return rightP.x == leftP.getX() & rightP.y == leftP.getY();
+    return rightP.x == leftP.getX() && rightP.y == leftP.getY();
   }
-
 };
+
+
+
 
 /**
  * Basic data structure to represent searchable matrix.
@@ -55,40 +55,41 @@ class MatrixMaze : public Searchable<T> {
     return new State<T>(this->end);
   }
 
-  multiset<State<T>*, comp<T>> getFullState(const State<T>& findAdj) const override {
+  multiset<State<T>*, comp<T>> getFullState(const State<T>* findAdj)  override {
 
     try {
-      const unsigned int x = findAdj.getState().getX();
-      const unsigned int y = findAdj.getState().getY();
+      const unsigned int x = findAdj->getState().getX();
+      const unsigned int y = findAdj->getState().getY();
 
       multiset<State<T>*, comp<T>> returnList;
 
-      if (x > 0 & (this->matrixBase->at(y).at(x - 1) != WALL)) {
+      if (x > 0 && (this->matrixBase->at(y).at(x - 1) != WALL)) {
         State<Point>* left = new State<Point>(Point(x - 1, y));
         left->setCost(this->matrixBase->at(y).at(x - 1));
         returnList.emplace(left);
       }
-      if (x < this->matrixBase[y].size()
-          & (this->matrixBase->at(y).at(x + 1) != WALL)) {
+      if (x < (this->matrixBase->at(y).size() - 1)
+          && (this->matrixBase->at(y).at(x + 1) != WALL)) {
         State<Point>* right = new State<Point>(Point(x + 1, y));
         right->setCost(this->matrixBase->at(y).at(x + 1));
         returnList.emplace(right);
       }
 
-      if (y > 0 & (this->matrixBase->at(y - 1).at(x) != WALL)) {
+      if (y > 0 && (this->matrixBase->at(y - 1).at(x) != WALL)) {
 
         State<Point>* up = new State<Point>(Point(x, y - 1));
         up->setCost(this->matrixBase->at(y - 1).at(x));
         returnList.emplace(up);
       }
 
-      if (y < this->matrixBase->size()
-          & (this->matrixBase->at(y + 1).at(x) != WALL)) {
+      if (y < (this->matrixBase->size() - 1)
+          && (this->matrixBase->at(y + 1).at(x) != WALL)) {
 
         State<Point>* down = new State<Point>(Point(x, y + 1));
         down->setCost(this->matrixBase->at(y + 1).at(x));
         returnList.emplace(down);
       }
+
       return returnList;
 
     } catch(...) {
