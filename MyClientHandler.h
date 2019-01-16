@@ -34,30 +34,34 @@ class MyClientHandler : public ClientHandler {
 
   void handleClient(StreamInput* input, StreamOutput* output) override {
 
-try {
-    string inputString;
+    try {
+      string inputString;
 
-    do {
-      inputString += input->read();
+      do {
+        inputString += input->read();
 
-    } while (inputString.rfind(SUFFIX_TYPE) == string::npos);
+      } while (inputString.rfind(SUFFIX_TYPE) == string::npos);
 
-    inputString.erase(inputString.begin() + inputString.rfind(SUFFIX_TYPE), inputString.end());
+      inputString.erase(inputString.begin() + inputString.rfind(SUFFIX_TYPE),
+                        inputString.end());
 
-
-  //output->write(problemP->writeProtocol(problemP->readProtocol(inputString)));
-    output->write(solutionP->writeProtocol(
-        currentSolver->solve(problemP->readProtocol(inputString))));
+      output->write(solutionP->writeProtocol(
+          currentSolver->solve(problemP->readProtocol(inputString))));
+    }
+    catch (invalid_argument &e) {
+      cout << e.what() << endl;
+    }
+    catch (...) {
+      cout << "Problem in client handler" << endl;
+      return;
+    }
   }
-catch (invalid_argument& e) {
-  cout<<e.what()<<endl;
-}
-catch (...){
-  cout<<"Problem in client handler"<<endl;
-  return;
-}
+  ~MyClientHandler() {
+    delete currentSolver;
+    delete currentManager;
+    delete problemP;
+    delete solutionP;
   }
-
 };
 
 #endif //ED2_MYTESTHANDLER_H

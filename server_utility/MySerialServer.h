@@ -4,10 +4,8 @@
 
  class MySerialServer : public server_side::Server {
 
-  pthread_t serialThread;
-
  public:
-   MySerialServer();
+   MySerialServer() = default;
 
    void open(int port, ClientHandler*) override;
 
