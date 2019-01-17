@@ -11,7 +11,7 @@ class Protocol {
 
  public:
 
-  virtual T readProtocol(string) = 0;
+  virtual T* readProtocol(string) = 0;
 
   virtual string writeProtocol(T) = 0;
 

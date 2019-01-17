@@ -26,7 +26,7 @@ class ProtocolMatrix : public Protocol<MatrixMaze<Point>> {
  public:
 
 
-  MatrixMaze<Point> readProtocol(string readMatrix) override {
+  MatrixMaze<Point>* readProtocol(string readMatrix) override {
     auto* matrixBase = new vector<vector<int>>;
 
     readMatrix.erase(std::remove(readMatrix.begin(), readMatrix.end(), SPACE),
@@ -62,7 +62,7 @@ class ProtocolMatrix : public Protocol<MatrixMaze<Point>> {
       throw invalid_argument("Point start/end invalid");
     }
 
-    return MatrixMaze<Point>(matrixBase, start, end);
+    return new MatrixMaze<Point>(matrixBase, start, end);
   }
   string writeProtocol(MatrixMaze<Point> writeThis) override {
     vector<vector<int>> *pointTo = writeThis.getMatrix();

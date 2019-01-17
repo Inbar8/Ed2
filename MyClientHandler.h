@@ -30,8 +30,6 @@ class MyClientHandler : public ClientHandler {
   }
 
 
-
-
   void handleClient(StreamInput* input, StreamOutput* output) override {
 
     try {
@@ -45,8 +43,9 @@ class MyClientHandler : public ClientHandler {
       inputString.erase(inputString.begin() + inputString.rfind(SUFFIX_TYPE),
                         inputString.end());
 
-      output->write(solutionP->writeProtocol(
-          currentSolver->solve(problemP->readProtocol(inputString))));
+      Problem* problemS = problemP->readProtocol(inputString);
+      vector<string> solutionS = this->currentSolver->solve((problemS));
+      output->write(solutionP->writeProtocol(solutionS));
     }
     catch (invalid_argument &e) {
       cout << e.what() << endl;
@@ -56,6 +55,8 @@ class MyClientHandler : public ClientHandler {
       return;
     }
   }
+
+
   ~MyClientHandler() {
     delete currentSolver;
     delete currentManager;

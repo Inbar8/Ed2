@@ -6,8 +6,8 @@
 class ProtocolTrace : public Protocol<vector<string>> {
 
  public:
-  vector<string> readProtocol(string readVector) override {
-    vector<string> vectorToReturn;
+  vector<string>* readProtocol(string readVector) override {
+    auto * vectorToReturn = new vector<string>;
     string tempString;
     stringstream stream(readVector);
     char temp;
@@ -18,10 +18,10 @@ class ProtocolTrace : public Protocol<vector<string>> {
       tempString += temp;
       if (stream.peek() == ',') {
         stream.ignore();
-        vectorToReturn.push_back(tempString);
+        vectorToReturn->push_back(tempString);
         tempString.clear();
       } else if (stream.peek() == '}') {
-        vectorToReturn.push_back(tempString);
+        vectorToReturn->push_back(tempString);
         break;
       }
   }
@@ -38,7 +38,9 @@ class ProtocolTrace : public Protocol<vector<string>> {
     }
     returnString += "}";
 
-    return returnString;
+  //  return returnString;
+  string h = "hello";
+  return h;
   }
 //}Right, Left, Down, Up }
 };

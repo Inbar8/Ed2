@@ -39,8 +39,8 @@ class FileCacheManager : public CacheManager<Problem, Solution> {
           stringToReturn.clear();
 
         } else if (temp == (TOKEN) & readProblem) {
-          Solution s = this->solutionP->readProtocol(stringToReturn);
-          this->cacheMap[this->problemP->readProtocol(problem)] = s;
+          Solution* s = this->solutionP->readProtocol(stringToReturn);
+          this->cacheMap[*this->problemP->readProtocol(problem)] = *s;
           readProblem = false;
           problem.clear();
           stringToReturn.clear();

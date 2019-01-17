@@ -19,7 +19,6 @@
 #include "MyException.h"
 #include "StreamInput.h"
 #include "StreamOutput.h"
-#define TIME_OUT 10
 
 
 namespace posix_sockets {
@@ -34,7 +33,9 @@ struct TCP_socket {
     this->sock_fd = open_sock_fd;
   }
 
-  void close();
+  void close() {
+    ::close(this->sock_fd);
+  }
 
   void setTimeOut(int, int usec = 0);
 };
@@ -112,11 +113,6 @@ class TCP_server {
   }
 
 };
-
-
-
-
-
 
 }
 

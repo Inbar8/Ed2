@@ -57,7 +57,8 @@ posix_sockets::TCP_client* posix_sockets::TCP_server::accept() {
   if (client_sock_fd < 0) {
     if (errno == EAGAIN || errno == EWOULDBLOCK) {
       this->close();
-      //throw timeout_exception("timeout on accept");
+      return nullptr;
+     // throw timeout_exception("timeout on accept");
     } else {
       throw system_error(error_code(errno, generic_category()),
                          "error on accept");
@@ -114,12 +115,5 @@ void posix_sockets::TCP_server::close() {
 
 void posix_sockets::TCP_client::close() {
   sock.close();
-}
-
-void posix_sockets::TCP_socket::close() {
-  if (::close(sock_fd) < 0) {
-    throw system_error(error_code(errno, generic_category()),
-                       "failure on closing socket");
-  }
 }
 

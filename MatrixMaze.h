@@ -36,7 +36,7 @@ struct Point {
  * @tparam T - type of data stored.
  */
 template <class T>
-class MatrixMaze : public Searchable<T> {
+class MatrixMaze : public Searchable<Point> {
 
 
   vector<vector<int>>* matrixBase;
